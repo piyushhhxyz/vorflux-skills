@@ -1,0 +1,160 @@
+# {{ name }}
+
+<!-- Badges — replace slugs with your own -->
+[![CI](https://github.com/your-org/{{ name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/{{ name }}/actions)
+[![Version](https://img.shields.io/github/v/release/your-org/{{ name }})](https://github.com/your-org/{{ name }}/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![{{ language }}](https://img.shields.io/badge/{{ language }}-{{ runtime }}-blue)](https://{{ language | lower }}.org)
+
+> {{ description }}
+
+---
+
+## Features
+
+- **Feature 1** — describe a key capability
+- **Feature 2** — describe another capability
+- **Feature 3** — describe another capability
+
+---
+
+## Prerequisites
+
+- [{{ runtime }}](https://{{ language | lower }}.org) {{ runtime }}
+{% if package_manager == "npm" %}
+- [Node.js](https://nodejs.org) ≥ 18
+{% endif %}
+{% if has_docker %}
+- [Docker](https://docs.docker.com/get-docker/) ≥ 24 (optional)
+{% endif %}
+
+---
+
+## Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/your-org/{{ name }}.git
+cd {{ name }}
+
+# Install dependencies
+{% if package_manager == "npm" %}npm install
+{% elif package_manager == "pnpm" %}pnpm install
+{% elif package_manager == "yarn" %}yarn install
+{% elif package_manager == "pip" %}pip install -r requirements.txt
+{% elif package_manager == "go modules" %}go mod download
+{% elif package_manager == "cargo" %}cargo build
+{% endif %}
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your values
+```
+
+---
+
+## Configuration
+
+{% if env_vars %}
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+{% for v in env_vars %}| `{{ v.key }}` | {{ "✅" if v.required else "⬜" }} | `{{ v.default or "—" }}` | {{ v.description }} |
+{% endfor %}
+{% else %}
+Copy `.env.example` to `.env` and fill in the required values.
+{% endif %}
+
+---
+
+## Usage
+
+```bash
+# Development
+{% if "dev" in scripts %}{{ package_manager }} run dev
+{% elif "start:dev" in scripts %}{{ package_manager }} run start:dev
+{% elif language == "Python" %}uvicorn main:app --reload
+{% elif language == "Go" %}go run ./cmd/server
+{% else %}{{ package_manager }} start
+{% endif %}
+
+# Production build
+{% if "build" in scripts %}{{ package_manager }} run build
+{% endif %}
+{% if "start" in scripts %}{{ package_manager }} start
+{% endif %}
+```
+
+{% if ports %}
+The application runs on port{% if ports | length > 1 %}s{% endif %} **{{ ports | join(", ") }}**.
+{% endif %}
+
+{% if has_docker %}
+### Docker
+
+```bash
+# Build and run all services
+docker compose up -d
+
+# View logs
+docker compose logs -f app
+
+# Stop
+docker compose down
+```
+{% endif %}
+
+---
+
+## Testing
+
+```bash
+{% if test_runner == "jest" or test_runner == "vitest" %}
+{{ package_manager }} test               # run all tests
+{{ package_manager }} test -- --coverage # with coverage
+{% elif test_runner == "pytest" %}
+pytest                     # run all tests
+pytest --cov=. --cov-report=term-missing  # with coverage
+{% elif test_runner == "go test" %}
+go test ./...              # run all tests
+go test ./... -cover       # with coverage
+{% elif test_runner == "cargo test" %}
+cargo test                 # run all tests
+{% endif %}
+```
+
+---
+
+## Project Structure
+
+```
+{{ name }}/
+{% for d in src_dirs %}├── {{ d }}/
+{% endfor %}├── .env.example
+{% if has_docker %}├── Dockerfile
+├── docker-compose.yml
+{% endif %}{% if has_license %}├── LICENSE
+{% endif %}└── README.md
+```
+
+---
+
+## Contributing
+
+{% if has_contributing %}
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+{% else %}
+1. Fork the repo
+2. Create your feature branch: `git checkout -b feat/my-feature`
+3. Commit using Conventional Commits: `git commit -m "feat: add my feature"`
+4. Push and open a Pull Request
+{% endif %}
+
+---
+
+## License
+
+{% if has_license %}
+Distributed under the MIT License. See [LICENSE](./LICENSE) for details.
+{% else %}
+MIT © {{ name }} contributors
+{% endif %}

@@ -1,0 +1,204 @@
+openapi: 3.1.0
+info:
+  title: My API
+  version: 1.0.0
+  description: |
+    Auto-generated API documentation.
+    Replace this description with your own.
+  contact:
+    name: API Support
+    email: api@example.com
+  license:
+    name: MIT
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production
+  - url: https://staging-api.example.com/v1
+    description: Staging
+  - url: http://localhost:3000
+    description: Local development
+
+security:
+  - BearerAuth: []
+
+# ── Add your paths below ────────────────────────────────────────────────────
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Health check
+      tags: [System]
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  uptime:
+                    type: number
+                    example: 3600
+
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      tags: [Users]
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20, maximum: 100 }
+        - name: search
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUsers'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      operationId: createUser
+      summary: Create a new user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Email already exists
+
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      operationId: getUser
+      summary: Get user by ID
+      tags: [Users]
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateUser
+      summary: Update user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateUserRequest' }
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+    delete:
+      operationId: deleteUser
+      summary: Delete user
+      tags: [Users]
+      responses:
+        '204':
+          description: User deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+# ── Components ────────────────────────────────────────────────────────────────
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    BadRequest:
+      description: Invalid request data
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+  schemas:
+    User:
+      type: object
+      required: [id, email, name, createdAt]
+      properties:
+        id:        { type: string, format: uuid,     example: "550e8400-e29b-41d4-a716-446655440000" }
+        email:     { type: string, format: email,    example: "user@example.com" }
+        name:      { type: string,                   example: "Jane Doe" }
+        role:      { type: string, enum: [admin, user, viewer], example: "user" }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    CreateUserRequest:
+      type: object
+      required: [email, name, password]
+      properties:
+        email:    { type: string, format: email }
+        name:     { type: string, minLength: 2, maxLength: 100 }
+        password: { type: string, minLength: 8, format: password }
+        role:     { type: string, enum: [admin, user, viewer], default: "user" }
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:  { type: string, minLength: 2, maxLength: 100 }
+        role:  { type: string, enum: [admin, user, viewer] }
+
+    PaginatedUsers:
+      type: object
+      properties:
+        data:  { type: array, items: { $ref: '#/components/schemas/User' } }
+        total: { type: integer, example: 150 }
+        page:  { type: integer, example: 1 }
+        limit: { type: integer, example: 20 }
+
+    Error:
+      type: object
+      required: [error, message]
+      properties:
+        error:   { type: string, example: "NOT_FOUND" }
+        message: { type: string, example: "User not found" }
+        details: { type: object }

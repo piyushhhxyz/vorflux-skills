@@ -1,0 +1,60 @@
+{
+  "title": "Q3 2024 Business Review",
+  "theme": "corporate",
+  "author": "Strategy Team",
+  "slides": [
+    {
+      "layout": "title",
+      "title": "Q3 2024 Business Review",
+      "subtitle": "Performance · Insights · Roadmap"
+    },
+    {
+      "layout": "content",
+      "title": "Agenda",
+      "bullets": [
+        "Executive Summary",
+        "Revenue & Growth Metrics",
+        "Product Highlights",
+        "Customer Success Stories",
+        "Q4 Roadmap & Priorities"
+      ]
+    },
+    {
+      "layout": "content",
+      "title": "Executive Summary",
+      "bullets": [
+        "Revenue grew 34% YoY — exceeded forecast by $1.2M",
+        "Launched 3 major product features with 92% adoption",
+        "NPS score improved from 42 to 61",
+        "Expanded to 2 new enterprise segments",
+        "Headcount grew from 48 to 67 (39% growth)"
+      ]
+    },
+    {
+      "layout": "two_col",
+      "title": "Wins vs. Challenges",
+      "left": [
+        "Record MRR: $2.4M",
+        "Churn down to 1.8%",
+        "3 enterprise logos signed",
+        "Infra costs -22%"
+      ],
+      "right": [
+        "Sales cycle still 60+ days",
+        "Support ticket backlog grew",
+        "Mobile app NPS lags at 38",
+        "Hiring 2 key roles stalled"
+      ]
+    },
+    {
+      "layout": "quote",
+      "quote": "This is the most reliable platform we've evaluated in 5 years of testing enterprise tools.",
+      "author": "CTO, Fortune 500 Client"
+    },
+    {
+      "layout": "closing",
+      "title": "Thank You",
+      "subtitle": "Questions? strategy@company.com"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "filename": "project_tracker.xlsx",
+  "template": "project-tracker",
+  "sheets": [
+    {
+      "name": "Tasks",
+      "freeze_header": true,
+      "auto_filter": true,
+      "totals_row": false,
+      "headers": ["#", "Task", "Owner", "Priority", "Status", "Start Date", "Due Date", "Est. Hours", "Actual Hours", "% Complete", "Notes"],
+      "rows": [
+        [1, "Requirements gathering",   "Alice",   "High",   "Done",        "2024-01-02", "2024-01-08", 16, 14, 100, "Approved by stakeholders"],
+        [2, "System architecture",      "Bob",     "High",   "Done",        "2024-01-09", "2024-01-16", 24, 28, 100, "ADR documented"],
+        [3, "Database schema design",   "Alice",   "High",   "Done",        "2024-01-17", "2024-01-22", 12, 11, 100, ""],
+        [4, "API development",          "Charlie", "High",   "In Progress", "2024-01-23", "2024-02-06", 40, 22, 55,  "Auth endpoints complete"],
+        [5, "Frontend development",     "Diana",   "High",   "In Progress", "2024-01-30", "2024-02-13", 48, 18, 37,  ""],
+        [6, "Unit tests",               "Charlie", "Medium", "Not Started", "2024-02-07", "2024-02-14", 16, 0,  0,   ""],
+        [7, "Integration tests",        "Bob",     "Medium", "Not Started", "2024-02-14", "2024-02-20", 12, 0,  0,   ""],
+        [8, "QA & bug fixes",           "Diana",   "High",   "Not Started", "2024-02-21", "2024-02-28", 20, 0,  0,   ""],
+        [9, "Staging deployment",       "Bob",     "Medium", "Not Started", "2024-03-01", "2024-03-04", 8,  0,  0,   ""],
+        [10, "Production release",      "Alice",   "High",   "Not Started", "2024-03-05", "2024-03-07", 6,  0,  0,   ""]
+      ]
+    },
+    {
+      "name": "Summary",
+      "freeze_header": true,
+      "auto_filter": false,
+      "totals_row": true,
+      "headers": ["Status", "Count", "Est. Hours", "Actual Hours"],
+      "rows": [
+        ["Done",        3, 52, 53],
+        ["In Progress", 2, 88, 40],
+        ["Not Started", 5, 62,  0]
+      ]
+    }
+  ]
+}

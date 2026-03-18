@@ -1,0 +1,56 @@
+{
+  "template": "report",
+  "title": "API Performance Audit Report",
+  "subtitle": "Engineering · Q1 2024",
+  "author": "Platform Team",
+  "sections": [
+    {
+      "heading": "Executive Summary",
+      "intro": "This report presents findings from a comprehensive audit of the production API infrastructure conducted in January 2024. The audit covered 14 endpoints across 3 service boundaries.",
+      "callout": {
+        "type": "warning",
+        "title": "Critical Finding",
+        "text": "P99 latency on /api/search exceeded 4.2s under peak load — immediate optimization required."
+      }
+    },
+    {
+      "heading": "Performance Metrics",
+      "intro": "Baseline measurements captured over a 7-day window using Datadog APM.",
+      "table": {
+        "headers": ["Endpoint", "Avg (ms)", "P95 (ms)", "P99 (ms)", "Error Rate", "Status"],
+        "rows": [
+          ["/api/auth/login",    "42",  "88",   "124",  "0.02%", "✅ Good"],
+          ["/api/users",         "67",  "142",  "210",  "0.04%", "✅ Good"],
+          ["/api/search",        "820", "2100", "4200", "0.31%", "🔴 Critical"],
+          ["/api/products/list", "180", "420",  "680",  "0.08%", "🟡 Warning"],
+          ["/api/orders",        "95",  "200",  "340",  "0.05%", "✅ Good"]
+        ],
+        "footer": ["Average", "241", "590", "1111", "0.10%", "—"]
+      }
+    },
+    {
+      "heading": "Root Cause Analysis",
+      "bullets": [
+        "/api/search performs full-table scan on products table (12M rows, no index on search fields)",
+        "N+1 query pattern found in product category joins — 47 queries per request on average",
+        "No query result caching — identical searches re-executed on every request",
+        "Connection pool exhaustion observed at 800+ concurrent users"
+      ]
+    },
+    {
+      "heading": "Recommendations",
+      "bullets": [
+        "Add composite index on (name, category, brand) columns — estimated 10x speedup",
+        "Implement Redis cache for search results with 60s TTL",
+        "Refactor category joins using eager loading (ORM: includes/joins)",
+        "Increase connection pool from 10 to 50; add read replicas for search queries",
+        "Implement pagination limit enforcement (max 100 results per page)"
+      ],
+      "callout": {
+        "type": "success",
+        "title": "Expected Outcome",
+        "text": "Implementing all 5 recommendations should reduce P99 latency to under 300ms and error rate to <0.01%."
+      }
+    }
+  ]
+}

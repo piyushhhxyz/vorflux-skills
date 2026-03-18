@@ -1,0 +1,51 @@
+{
+  "filename": "monthly_budget.xlsx",
+  "template": "budget",
+  "sheets": [
+    {
+      "name": "Budget",
+      "freeze_header": true,
+      "auto_filter": true,
+      "totals_row": true,
+      "headers": ["Category", "Budgeted ($)", "Actual ($)", "Variance ($)", "% Used", "Status"],
+      "rows": [
+        ["Salaries & Benefits", 45000, 44200, "=C2-B2", "=C2/B2", "=IF(E2>1,\"Over\",\"OK\")"],
+        ["Marketing",           8000,  6500,  "=C3-B3", "=C3/B3", "=IF(E3>1,\"Over\",\"OK\")"],
+        ["Infrastructure",      5000,  5340,  "=C4-B4", "=C4/B4", "=IF(E4>1,\"Over\",\"OK\")"],
+        ["Travel & Expenses",   3000,  2100,  "=C5-B5", "=C5/B5", "=IF(E5>1,\"Over\",\"OK\")"],
+        ["Software Licenses",   2500,  2500,  "=C6-B6", "=C6/B6", "=IF(E6>1,\"Over\",\"OK\")"],
+        ["Office & Supplies",   1200,   890,  "=C7-B7", "=C7/B7", "=IF(E7>1,\"Over\",\"OK\")"],
+        ["Miscellaneous",       1000,   430,  "=C8-B8", "=C8/B8", "=IF(E8>1,\"Over\",\"OK\")"]
+      ],
+      "chart": {
+        "type": "bar",
+        "title": "Budget vs Actual by Category",
+        "x_col": 0,
+        "y_cols": [1, 2],
+        "anchor": "H2"
+      }
+    },
+    {
+      "name": "Monthly Trend",
+      "freeze_header": true,
+      "auto_filter": false,
+      "totals_row": false,
+      "headers": ["Month", "Revenue", "Expenses", "Net Profit", "Margin %"],
+      "rows": [
+        ["Jan", 120000, 98000, "=B2-C2", "=D2/B2"],
+        ["Feb", 135000, 102000, "=B3-C3", "=D3/B3"],
+        ["Mar", 142000, 108000, "=B4-C4", "=D4/B4"],
+        ["Apr", 128000, 99000, "=B5-C5", "=D5/B5"],
+        ["May", 155000, 115000, "=B6-C6", "=D6/B6"],
+        ["Jun", 161000, 118000, "=B7-C7", "=D7/B7"]
+      ],
+      "chart": {
+        "type": "line",
+        "title": "Revenue vs Expenses Trend",
+        "x_col": 0,
+        "y_cols": [1, 2, 3],
+        "anchor": "G2"
+      }
+    }
+  ]
+}

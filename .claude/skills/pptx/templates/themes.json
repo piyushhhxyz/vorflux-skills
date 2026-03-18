@@ -1,0 +1,33 @@
+{
+  "themes": {
+    "corporate": {
+      "description": "Clean white background with deep blue accents. Best for business/executive audiences.",
+      "bg": "#FFFFFF",
+      "accent": "#005AA7",
+      "title_fg": "#1A1A2E",
+      "body_fg": "#333333"
+    },
+    "dark": {
+      "description": "Dark navy background with red accents. Best for tech/product demos.",
+      "bg": "#1A1A2E",
+      "accent": "#E94F37",
+      "title_fg": "#FFFFFF",
+      "body_fg": "#CCCCCC"
+    },
+    "minimal": {
+      "description": "Off-white background with green accents. Best for startups and modern brands.",
+      "bg": "#FAFAFA",
+      "accent": "#2ECC71",
+      "title_fg": "#111111",
+      "body_fg": "#444444"
+    }
+  },
+  "layouts": {
+    "title":   "Opening slide with large title and subtitle",
+    "content": "Standard bullet-point slide (max 6 bullets)",
+    "two_col": "Two-column comparison (left/right arrays)",
+    "image":   "Visual placeholder with caption",
+    "quote":   "Full-bleed quote slide (quote + author)",
+    "closing": "Thank-you/CTA slide"
+  }
+}
