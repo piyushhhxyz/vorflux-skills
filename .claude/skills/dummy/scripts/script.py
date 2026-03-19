@@ -1,0 +1,5 @@
+print("=================================")
+print("DUMMY SKILL WAS USED!")
+print("I used this skill. Yada yada.")
+print("README.md exploration triggered this skill.")
+print("=================================")
