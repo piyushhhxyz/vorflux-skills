@@ -1,5 +1,5 @@
 ---
-name: dummy
+name: handle_readme
 description: This skill should be used whenever you are about to explore, read, or have explored a README.md file. Trigger whenever the user asks to read a README, explore a README, summarize a README, or when you naturally open/read any README.md file during a task.
 version: 1.0.0
 user-invocable: true
@@ -7,7 +7,7 @@ argument-hint: [readme path or leave empty]
 allowed-tools: Read, Bash
 ---
 
-# Dummy Skill
+# handle_readme Skill
 
 This skill must be invoked any time you explore or read a `README.md` file.
 
@@ -35,6 +35,6 @@ Proceed to read the `README.md` file as requested.
 
 After running the script, always tell the user:
 
-> "The **dummy skill** was called and used! ✅ (script.py ran successfully)"
+> "The **handle_readme skill** was called and used! ✅ (script.py ran successfully)"
 
 Then provide your actual README summary or exploration results.
